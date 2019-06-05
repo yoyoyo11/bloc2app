@@ -2,6 +2,8 @@
 
 A new Flutter project.
 
+See this for youtube exercise on Bloc: https://www.youtube.com/watch?v=oxeYeMHVLII
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
