@@ -32,47 +32,53 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: StreamBuilder(
+          stream: _bloc.counter,
+          initialData: 0,
+          builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'You have pushed the button this many times:',
+                ),
+                Text(
+                  '${snapshot.data}',
+                  style: Theme.of(context).textTheme.display1,
+                ),
+              ],
+            );
+          },
         ),
-        body: Center(
-          child: StreamBuilder(
-            stream: _bloc.counter,
-            initialData: 0,
-            builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'You have pushed the button this many times:',
-                  ),
-                  Text(
-                    '${snapshot.data}',
-                    style: Theme.of(context).textTheme.display1,
-                  ),
-                ],
-              );
-            },
+      ),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          FloatingActionButton(
+            onPressed: () => _bloc.counterEventSink.add(IncrementEvent()),
+            tooltip: 'Increment',
+            child: Icon(Icons.add),
           ),
-        ),
-        floatingActionButton: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            FloatingActionButton(
-              onPressed: () => _bloc.counterEventSink.add(IncrementEvent()),
-              tooltip: 'Increment',
-              child: Icon(Icons.add),
-            ),
-            SizedBox(
-              width: 10.0,
-            ),
-            FloatingActionButton(
-              onPressed: () => _bloc.counterEventSink.add(DecrementEvent()),
-              tooltip: 'Decrement',
-              child: Icon(Icons.remove),
-            ),
-          ],
-        ) // This trailing comma makes auto-formatting nicer for build methods.
-        );
+          SizedBox(
+            width: 10.0,
+          ),
+          FloatingActionButton(
+            onPressed: () => _bloc.counterEventSink.add(DecrementEvent()),
+            tooltip: 'Decrement',
+            child: Icon(Icons.remove),
+          ),
+        ],
+      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _bloc.dispose();
   }
 }
