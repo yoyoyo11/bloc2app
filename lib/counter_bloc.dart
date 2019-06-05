@@ -14,7 +14,7 @@ class CounterBloc {
   // For events, exposing only a sink which is an input
   Sink<CounterEvent> get counterEventSink => _counterEventController.sink;
 
-  Counter() {
+  CounterBloc() {
     // Whenever there is a new event, we want to map it to a new state
     _counterEventController.stream.listen(_mapEventToState);
   }
